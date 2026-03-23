@@ -6,14 +6,8 @@ if [ "${ACM_HTTP_SERVER}" == "true" ]; then
   echo "Starting HTTP Server"
   /build/acm -c /asn1_codec/config/${ACM_CONFIG_FILE} -v ${ACM_LOG_LEVEL} -R -H
 else
-  echo "Starting Kafka"
-  /build/acm -c /asn1_codec/config/${ACM_CONFIG_FILE} -b ${DOCKER_HOST_IP}:9092 -v ${ACM_LOG_LEVEL} -R &
-  /build/acm -c /asn1_codec/config/${ACM_CONFIG_FILE} -b ${DOCKER_HOST_IP}:9092 -v ${ACM_LOG_LEVEL} -R &
-  /build/acm -c /asn1_codec/config/${ACM_CONFIG_FILE} -b ${DOCKER_HOST_IP}:9092 -v ${ACM_LOG_LEVEL} -R &
-  /build/acm -c /asn1_codec/config/${ACM_CONFIG_FILE} -b ${DOCKER_HOST_IP}:9092 -v ${ACM_LOG_LEVEL} -R &
-  /build/acm -c /asn1_codec/config/${ACM_CONFIG_FILE} -b ${DOCKER_HOST_IP}:9092 -v ${ACM_LOG_LEVEL} -R &
-  /build/acm -c /asn1_codec/config/${ACM_CONFIG_FILE} -b ${DOCKER_HOST_IP}:9092 -v ${ACM_LOG_LEVEL} -R &
-  /build/acm -c /asn1_codec/config/${ACM_CONFIG_FILE} -b ${DOCKER_HOST_IP}:9092 -v ${ACM_LOG_LEVEL} -R &
-  /build/acm -c /asn1_codec/config/${ACM_CONFIG_FILE} -b ${DOCKER_HOST_IP}:9092 -v ${ACM_LOG_LEVEL} -R
+  echo "Starting supervisord to run Kafka consumers"
+  # Start supervisord
+  supervisord -n -c /etc/supervisord.conf
 fi
 

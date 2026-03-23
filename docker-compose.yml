@@ -18,13 +18,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-      - "9090:9090"
-    depends_on:
-      - kafka
-    links:
-      - kafka
+#    ports:
+#      - "8080:8080"
+#      - "9090:9090"
+#    depends_on:
+#      - kafka
+#    links:
+#      - kafka
     environment:
       DOCKER_HOST_IP: ${DOCKER_HOST_IP}
       KAFKA_TYPE: "ON-PREM"
@@ -32,4 +32,5 @@ services:
       ACM_LOG_TO_CONSOLE: "${ACM_LOG_TO_CONSOLE}"
       ACM_LOG_TO_FILE: "${ACM_LOG_TO_FILE}"
       ACM_LOG_LEVEL: "${ACM_LOG_LEVEL}"
+      ACM_NUMBER_OF_PROCESSES: ${ACM_NUMBER_OF_PROCESSES}
     restart: on-failure
