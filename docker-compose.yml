@@ -3,7 +3,7 @@ services:
   asn1_codec:
     build:
       context: .
-      dockerfile: Dockerfile.amazonlinux
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
       - "9090:9090"
