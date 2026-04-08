@@ -54,6 +54,7 @@ The following environment variables are used by the ACM:
 | `KAFKA_TYPE` | If unset, a local kafka broker will be targeted. If set to "CONFLUENT", the application will target a Confluent Cloud cluster. |
 | `CONFLUENT_KEY` | Confluent Cloud Integration (if KAFKA_TYPE is set to "CONFLUENT") |
 | `CONFLUENT_SECRET` | Confluent Cloud Integration (if KAFKA_TYPE is set to "CONFLUENT") |
+ | `ACM_NUMBER_OF_PROCESSES` | Number of ACM processes/consumers to run per container |
 
 The `sample.env` file contains the default values for some of these environment variables. To use these values, copy the `sample.env` file to `.env` and modify the values as needed.
 
@@ -115,9 +116,11 @@ provide scalability by running multiple ACM processes. Each ACM process runs a s
 for one consumer to consume messages from multiple partitions, but a single consumer by itself is not scalable.  However,
 there are two methods to add multiple ACM processes to efficiently handle multiple partitions by consuming them with
 multiple consumers that run in parallel:
+
 1. Multiple ACM containers can be started run within Docker or within a Kubernetes cluster, or
 2. A single container can be configured to run multiple consumer processes by setting the `ACM_NUMBER_OF_PROCESSES` 
 environment variable to a value greater than 1.
+
 One or both of these methods may be used.  For example if the Kafka topics are configured with 100 partitions, 10 ACM
 containers configured to run 10 consumers each could be used to provide one consumer per partition for maximum
 throughput.
