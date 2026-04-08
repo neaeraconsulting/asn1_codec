@@ -108,13 +108,19 @@ the ACM will likely generate an error when doing constraint checking.
 Both the ENCODER and DECODER will check the ASN.1 constraints for the C structures that are built as data passes through
 the module.
 
-## ACM Kafka Limitations
+## Configuring ACM to use multiple Kafka partitions
 
-With regard to the Apache Kafka architecture, each ACM process does **not** provide a way to take advantage of Kafka's scalable
-architecture. In other words, each ACM process will consume data from a single Kafka topic and a single partition within
-that topic. One way to consume topics with multiple partitions is to launch one ACM process for each partition; the
-configuration file will allow you to designate the partition. In the future, the ACM may be updated to automatically
-handle multiple partitions within a single topic.
+Each ACM process does **not** provide a way to take advantage of Kafka's scalable architecture, but it is possible to
+provide scalability by running multiple ACM processes. Each ACM process runs a single Kafka consumer. It is possible 
+for one consumer to consume messages from multiple partitions, but a single consumer by itself is not scalable.  However,
+there are two methods to add multiple ACM processes to efficiently handle multiple partitions by consuming them with
+multiple consumers that run in parallel:
+1. Multiple ACM containers can be started run within Docker or within a Kubernetes cluster, or
+2. A single container can be configured to run multiple consumer processes by setting the `ACM_NUMBER_OF_PROCESSES` 
+environment variable to a value greater than 1.
+One or both of these methods may be used.  For example if the Kafka topics are configured with 100 partitions, 10 ACM
+containers configured to run 10 consumers each could be used to provide one consumer per partition for maximum
+throughput.
 
 ## ACM Logging
 
