@@ -117,11 +117,11 @@ for one consumer to consume messages from multiple partitions, but a single cons
 there are two methods to add multiple ACM processes to efficiently handle multiple partitions by consuming them with
 multiple consumers that run in parallel:
 
-1. Multiple ACM containers can be started run within Docker or within a Kubernetes cluster, or
+1. Multiple ACM containers can be run via Docker Compose or within a Kubernetes cluster, or
 2. A single container can be configured to run multiple consumer processes by setting the `ACM_NUMBER_OF_PROCESSES` 
 environment variable to a value greater than 1.
 
-One or both of these methods may be used.  For example if the Kafka topics are configured with 100 partitions, 10 ACM
+These methods may be combined.  For example, if the Kafka topics are configured with 100 partitions, 10 ACM
 containers configured to run 10 consumers each could be used to provide one consumer per partition for maximum
 throughput.
 
