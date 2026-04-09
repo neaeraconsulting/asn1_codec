@@ -54,7 +54,7 @@ The following environment variables are used by the ACM:
 | `KAFKA_TYPE` | If unset, a local kafka broker will be targeted. If set to "CONFLUENT", the application will target a Confluent Cloud cluster. |
 | `CONFLUENT_KEY` | Confluent Cloud Integration (if KAFKA_TYPE is set to "CONFLUENT") |
 | `CONFLUENT_SECRET` | Confluent Cloud Integration (if KAFKA_TYPE is set to "CONFLUENT") |
- | `ACM_NUMBER_OF_PROCESSES` | Number of ACM processes/consumers to run per container |
+| `ACM_NUMBER_OF_PROCESSES` | Number of ACM processes/consumers to run per container |
 
 The `sample.env` file contains the default values for some of these environment variables. To use these values, copy the `sample.env` file to `.env` and modify the values as needed.
 
