@@ -1,10 +1,10 @@
 asn1_codec Release Notes
 ----------------------------
 
-Version 3.3.0, April 2026
+Version 3.3.0, released April 2026
 ----------------------------------------
 ### **Summary**
-This release adds support for running multiple kafka consumer/producer processes to make efficient use
+This release adds support for running multiple Kafka consumer/producer processes to make efficient use
 of resources within containers.
 
 Enhancements in this release:
