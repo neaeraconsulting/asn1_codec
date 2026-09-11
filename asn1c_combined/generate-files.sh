@@ -35,7 +35,7 @@ fi
 # - Use -fwide-types to prevent generating C "long" types for better cross-platform support (Windows "longs" are 32 bits)
 # and generally better support for large integer types.
 # - Enable JER support by not including '-no-gen-JER'.
-asn1c -fno-include-deps -fcompound-names -fcase-insensitive-filenames -gen-OER -fincludes-quoted -fwide-types -pdu=all \
+asn1c -fno-include-deps -fcompound-names -fcase-insensitive-filenames -gen-OER -gen-JER -fincludes-quoted -fwide-types -pdu=all \
     ./scms-asn-files/*.asn \
     ./j2735-asn-files/$year/*.asn \
     ./semi-asn-files/$year/SEMI*.asn \
