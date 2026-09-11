@@ -11,7 +11,9 @@ int
 Uint64_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const INTEGER_t *st = (const INTEGER_t *)sptr;
-	unsigned long long value;
+
+	// Edit: change type to uintmax_t
+	uintmax_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -19,13 +21,15 @@ Uint64_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			td->name, __FILE__, __LINE__);
 		return -1;
 	}
-	
-	if(asn_INTEGER2long(st, &value)) {
+
+	// Edit: change asn_INTEGER2long to asn_INTEGER2umax
+	if(asn_INTEGER2umax(st, &value)) {
 		ASN__CTFAIL(app_key, td, sptr,
 			"%s: value too large (%s:%d)",
 			td->name, __FILE__, __LINE__);
 		return -1;
 	}
+
 	if((value >= 0L && value <= 18446744073709551615ULL)) {
 		/* Constraint check succeeded */
 		return 0;
