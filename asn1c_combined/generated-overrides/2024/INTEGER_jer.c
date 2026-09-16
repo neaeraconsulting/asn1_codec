@@ -192,12 +192,25 @@ INTEGER_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
                    asn_app_consume_bytes_f *cb, void *app_key) {
     const INTEGER_t *st = (const INTEGER_t *)sptr;
     asn_enc_rval_t er = {0,0,0};
+    intmax_t value;
 
     (void)ilevel;
     (void)flags;
 
     if(!st || !st->buf)
         ASN__ENCODE_FAILED;
+
+    // EDIT: emit enumerated identifiers as JSON strings instead of XER <name/> tags
+    if(asn_INTEGER2imax(st, &value) == 0 && value >= LONG_MIN && value <= LONG_MAX) {
+        const asn_INTEGER_specifics_t *specs =
+            (const asn_INTEGER_specifics_t *)td->specifics;
+        const asn_INTEGER_enum_map_t *el = INTEGER_map_value2enum(specs, value);
+        if(el) {
+            er.encoded = asn__format_to_callback(cb, app_key, "\"%s\"", el->enum_name);
+            if(er.encoded < 0) ASN__ENCODE_FAILED;
+            ASN__ENCODED_OK(er);
+        }
+    }
 
     er.encoded = INTEGER__dump(td, st, cb, app_key, 1);
     if(er.encoded < 0) ASN__ENCODE_FAILED;
