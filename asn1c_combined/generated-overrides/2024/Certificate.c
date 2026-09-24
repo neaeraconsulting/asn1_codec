@@ -17,13 +17,8 @@ Certificate_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			td->name, __FILE__, __LINE__);
 		return -1;
 	}
-	
-	
-	if(1 /* No applicable constraints whatsoever */) {
-		/* Nothing is here. See below */
-	}
-	
-	return td->encoding_constraints.general_constraints(td, sptr, ctfailcb, app_key);
+	/* asn1c emits a self-referential general constraint for this subtype. */
+	return 0;
 }
 
 /*
