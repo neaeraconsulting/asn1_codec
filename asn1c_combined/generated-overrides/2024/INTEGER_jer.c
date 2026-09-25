@@ -178,8 +178,9 @@ INTEGER__jer_body_decode(const asn_TYPE_descriptor_t *td, void *sptr,
 
 asn_dec_rval_t
 INTEGER_decode_jer(const asn_codec_ctx_t *opt_codec_ctx,
-                   const asn_TYPE_descriptor_t *td, void **sptr,
-                   const void *buf_ptr, size_t size) {
+                   const asn_TYPE_descriptor_t *td,
+                   const asn_jer_constraints_t *constraints,
+                   void **sptr, const void *buf_ptr, size_t size) {
     return jer_decode_primitive(opt_codec_ctx, td,
         sptr, sizeof(INTEGER_t),
         buf_ptr, size, INTEGER__jer_body_decode);
@@ -187,12 +188,12 @@ INTEGER_decode_jer(const asn_codec_ctx_t *opt_codec_ctx,
 
 
 asn_enc_rval_t
-INTEGER_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
-                   int ilevel, enum jer_encoder_flags_e flags,
+INTEGER_encode_jer(const asn_TYPE_descriptor_t *td,
+                   const asn_jer_constraints_t *constraints,
+                   const void *sptr, int ilevel, enum jer_encoder_flags_e flags,
                    asn_app_consume_bytes_f *cb, void *app_key) {
     const INTEGER_t *st = (const INTEGER_t *)sptr;
     asn_enc_rval_t er = {0,0,0};
-    intmax_t value;
 
     (void)ilevel;
     (void)flags;
@@ -200,19 +201,7 @@ INTEGER_encode_jer(const asn_TYPE_descriptor_t *td, const void *sptr,
     if(!st || !st->buf)
         ASN__ENCODE_FAILED;
 
-    // EDIT: emit enumerated identifiers as JSON strings instead of XER <name/> tags
-    if(asn_INTEGER2imax(st, &value) == 0 && value >= LONG_MIN && value <= LONG_MAX) {
-        const asn_INTEGER_specifics_t *specs =
-            (const asn_INTEGER_specifics_t *)td->specifics;
-        const asn_INTEGER_enum_map_t *el = INTEGER_map_value2enum(specs, value);
-        if(el) {
-            er.encoded = asn__format_to_callback(cb, app_key, "\"%s\"", el->enum_name);
-            if(er.encoded < 0) ASN__ENCODE_FAILED;
-            ASN__ENCODED_OK(er);
-        }
-    }
-
-    er.encoded = INTEGER__dump(td, st, cb, app_key, 1);
+    er.encoded = INTEGER__dump(td, st, cb, app_key, 2);
     if(er.encoded < 0) ASN__ENCODE_FAILED;
 
     ASN__ENCODED_OK(er);
