@@ -5,13 +5,15 @@
  * 	`asn1c -fno-include-deps -fcompound-names -fcase-insensitive-filenames -gen-OER -gen-JER -fincludes-quoted -fwide-types -pdu=all -D ./generated-files/2024`
  */
 
-#include "Ieee1609Dot2BaseTypes_Psid.h"
+#include "Uint64.h"
 
 int
-Ieee1609Dot2BaseTypes_Psid_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
+Uint64_constraint(const asn_TYPE_descriptor_t *td, const void *sptr,
 			asn_app_constraint_failed_f *ctfailcb, void *app_key) {
 	const INTEGER_t *st = (const INTEGER_t *)sptr;
-	long value;
+
+	// Edit: change type to uintmax_t
+	uintmax_t value;
 	
 	if(!sptr) {
 		ASN__CTFAIL(app_key, td, sptr,
@@ -20,8 +22,23 @@ Ieee1609Dot2BaseTypes_Psid_constraint(const asn_TYPE_descriptor_t *td, const voi
 		return -1;
 	}
 	
-	/* asn1c emits a self-referential general constraint for (0..MAX). */
-	return 0;
+	// Edit: change asn_INTEGER2long to asn_INTEGER2umax
+	if(asn_INTEGER2umax(st, &value)) {
+		ASN__CTFAIL(app_key, td, sptr,
+			"%s: value too large (%s:%d)",
+			td->name, __FILE__, __LINE__);
+		return -1;
+	}
+	
+	if((value >= 0L && value <= 18446744073709551615ULL)) {
+		/* Constraint check succeeded */
+		return 0;
+	} else {
+		ASN__CTFAIL(app_key, td, sptr,
+			"%s: constraint failed (%s:%d)",
+			td->name, __FILE__, __LINE__);
+		return -1;
+	}
 }
 
 /*
@@ -29,41 +46,41 @@ Ieee1609Dot2BaseTypes_Psid_constraint(const asn_TYPE_descriptor_t *td, const voi
  * so here we adjust the DEF accordingly.
  */
 #if !defined(ASN_DISABLE_OER_SUPPORT)
-static asn_oer_constraints_t asn_OER_type_Ieee1609Dot2BaseTypes_Psid_constr_1 CC_NOTUSED = {
-	{ 0, 1 }	/* (0..MAX) */,
+static asn_oer_constraints_t asn_OER_type_Uint64_constr_1 CC_NOTUSED = {
+	{ 8, 1 }	/* (0..18446744073709551615) */,
 	-1};
 #endif  /* !defined(ASN_DISABLE_OER_SUPPORT) */
 #if !defined(ASN_DISABLE_UPER_SUPPORT) || !defined(ASN_DISABLE_APER_SUPPORT)
-asn_per_constraints_t asn_PER_type_Ieee1609Dot2BaseTypes_Psid_constr_1 CC_NOTUSED = {
-	{ APC_SEMI_CONSTRAINED,	-1, -1,  0,  0 }	/* (0..MAX) */,
+asn_per_constraints_t asn_PER_type_Uint64_constr_1 CC_NOTUSED = {
+	{ APC_CONSTRAINED,	 64, -1,  0,  18446744073709551615ULL }	/* (0..18446744073709551615) */,
 	{ APC_UNCONSTRAINED,	-1, -1,  0,  0 },
 	0, 0	/* No PER value map */
 };
 #endif  /* !defined(ASN_DISABLE_UPER_SUPPORT) || !defined(ASN_DISABLE_APER_SUPPORT) */
-static const ber_tlv_tag_t asn_DEF_Ieee1609Dot2BaseTypes_Psid_tags_1[] = {
+static const ber_tlv_tag_t asn_DEF_Uint64_tags_1[] = {
 	(ASN_TAG_CLASS_UNIVERSAL | (2 << 2))
 };
-asn_TYPE_descriptor_t asn_DEF_Ieee1609Dot2BaseTypes_Psid = {
-	"Psid",
-	"Psid",
+asn_TYPE_descriptor_t asn_DEF_Uint64 = {
+	"Uint64",
+	"Uint64",
 	&asn_OP_INTEGER,
-	asn_DEF_Ieee1609Dot2BaseTypes_Psid_tags_1,
-	sizeof(asn_DEF_Ieee1609Dot2BaseTypes_Psid_tags_1)
-		/sizeof(asn_DEF_Ieee1609Dot2BaseTypes_Psid_tags_1[0]), /* 1 */
-	asn_DEF_Ieee1609Dot2BaseTypes_Psid_tags_1,	/* Same as above */
-	sizeof(asn_DEF_Ieee1609Dot2BaseTypes_Psid_tags_1)
-		/sizeof(asn_DEF_Ieee1609Dot2BaseTypes_Psid_tags_1[0]), /* 1 */
+	asn_DEF_Uint64_tags_1,
+	sizeof(asn_DEF_Uint64_tags_1)
+		/sizeof(asn_DEF_Uint64_tags_1[0]), /* 1 */
+	asn_DEF_Uint64_tags_1,	/* Same as above */
+	sizeof(asn_DEF_Uint64_tags_1)
+		/sizeof(asn_DEF_Uint64_tags_1[0]), /* 1 */
 	{
 #if !defined(ASN_DISABLE_OER_SUPPORT)
-		&asn_OER_type_Ieee1609Dot2BaseTypes_Psid_constr_1,
+		&asn_OER_type_Uint64_constr_1,
 #endif  /* !defined(ASN_DISABLE_OER_SUPPORT) */
 #if !defined(ASN_DISABLE_UPER_SUPPORT) || !defined(ASN_DISABLE_APER_SUPPORT)
-		&asn_PER_type_Ieee1609Dot2BaseTypes_Psid_constr_1,
+		&asn_PER_type_Uint64_constr_1,
 #endif  /* !defined(ASN_DISABLE_UPER_SUPPORT) || !defined(ASN_DISABLE_APER_SUPPORT) */
 #if !defined(ASN_DISABLE_JER_SUPPORT)
 		0,
 #endif  /* !defined(ASN_DISABLE_JER_SUPPORT) */
-		Ieee1609Dot2BaseTypes_Psid_constraint
+		Uint64_constraint
 	},
 	0, 0,	/* No members */
 	0	/* No specifics */
