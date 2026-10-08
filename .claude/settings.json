@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(**/j2735-asn-files/**)"
+    ]
+  }
+}

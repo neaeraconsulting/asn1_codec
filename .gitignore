@@ -10,6 +10,8 @@ docs/html
 
 .env
 settings.json
+!.claude/settings.json
+.claude/settings.local.json
 asn1c_combined/compile.out
 asn1c_combined/converter-example
 asn1c_combined/converter-example.mk
@@ -21,3 +23,6 @@ cmake-build-*/
 
 # Ignore Python bytecode files (generated during `do_kafka_test.sh` execution)
 *.pyc
+
+# SAE J2735 ASN.1 files are copyrighted and must not be committed
+asn1c_combined/j2735-asn-files/**/*.asn

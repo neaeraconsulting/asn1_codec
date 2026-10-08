@@ -44,10 +44,8 @@ asn1c -fno-include-deps -fcompound-names -fcase-insensitive-filenames -gen-OER -
     2>&1 | tee compile.out
 
 
-# Work around asn1c-generated constraints that call themselves recursively.
-# Keep the generated null checks, but replace the no-op constraint functions with
-# corrected versions before archiving the generated source.
-cp ./generated-overrides/$year/* ./generated-files/$year/
+# Uncomment of overrides are needed
+#cp ./generated-overrides/$year/* ./generated-files/$year/
 
 
 # tar generated files and delete originals
